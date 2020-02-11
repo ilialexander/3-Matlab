@@ -1,0 +1,48 @@
+#!/bin/bash
+
+i="0"
+
+while [[ $i -lt 10 ]]
+do
+   #HTM Process
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SM_1/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 59 59 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SM_2/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 60 60 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SM_3/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 61 61 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SM_4/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 62 62 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SM_5/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 63 63 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SM_6/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 64 64 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SM_7/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 65 65 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SM_8/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 66 66 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SM_9/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 67 67 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SM_10/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 68 68 ) &
+
+   # HTM+RM Process
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SRM_1/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 59 59 ) &
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SRM_2/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 60 60 ) &
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SRM_3/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 61 61 ) &
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SRM_4/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 62 62 ) &
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SRM_5/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 63 63 ) &
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SRM_6/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 64 64 ) &
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SRM_7/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 65 65 ) &
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SRM_8/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 66 66 ) &
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SRM_9/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 67 67 ) &
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=Pseu_perio_SRM_10/' nab_parallel_script ; sed -i '4s/.*/#SBATCH --time=20:00:00/' nab_parallel_script ;  sbatch nab_parallel_script 68 68 )
+
+   #For Script Testting Purposes
+   #(cd matlabHTM/ ; bash nabScript_1-2.sh)
+   #(cd htmau/ ; bash nabScript_1-2.sh)
+
+   #sleep 30
+
+   while [[ $(squeue -u iliabautista | grep Pseu_p | wc -l) -gt 1 ]]
+   do
+      sleep 15m
+      echo $i
+   done
+
+   #sleep 5s
+
+   matlab -nodisplay -nosplash -r "run('timing_test')"
+
+   i=$[$i+1]
+done

@@ -1,0 +1,9 @@
+#ignore htmau directory
+htmau
+
+#ignore matlabHTM directory
+matlabHTM
+
+#ignore matlabHTM-OLD directory
+matlab-HTM_OLD
+
