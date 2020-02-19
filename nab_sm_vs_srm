@@ -2,7 +2,7 @@
 
 i="0"
 
-while [[ $i -lt 50 ]]
+while [[ $i -lt 1 ]]
 do
    #HTM Process
    (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_1/' nab_parallel_script ; sbatch nab_parallel_script 1 16 ) &

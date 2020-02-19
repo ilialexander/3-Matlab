@@ -37,13 +37,13 @@ for i=startFile:endFile
     else        
         load (sprintf('htmau/Output/HTM_SM_%s.mat', name), 'anomalyScores');
         prediction_pct(anomalyScores);
+        csvwrite(sprintf('htmau/Output/%s_anomalyScores.csv', name), anomalyScores');
         load (sprintf('matlabHTM/Output/HTM_SM_%s.mat', name), 'anomalyScores');
         prediction_pct(anomalyScores);
+        csvwrite(sprintf('matlabHTM/Output/%s_anomalyScores.csv', name), anomalyScores');
     end
     
 end
-
-
 
 matlabHTM_timing_dataset = matlabHTM_timing_dataset_temp(2:size(matlabHTM_timing_dataset_temp,2));
 htm_time_notrn = htm_time_notrn_temp(2:size(htm_time_notrn_temp,2));
@@ -62,7 +62,7 @@ else
 end
 
 
-%exit
+exit
 
 
 function prediction_pct(anomalyScores)
