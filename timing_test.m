@@ -13,8 +13,10 @@ close all;
 
 matlabHTM_timing_dataset_temp = 0;
 htm_time_notrn_temp = 0;
+sm_time = zeros(startFile,endFile);
 htmau_timing_dataset_temp = 0;
 htmau_time_notrn_temp = 0;
+rmsm_time = zeros(startFile,endFile);
 
 %anomalyScores_all_temp = 0;
 
@@ -23,12 +25,16 @@ for i=startFile:endFile
     [~, name, ~] = fileparts(fileNames{i});
     load(sprintf("htmau/Output/time_SMRM_%s.mat",name));
     load(sprintf("matlabHTM/Output/time_HTM_%s.mat",name));
+%    load (sprintf('htmau/Output/HTM_SM_%s.mat', name), 'AU');
+%    load (sprintf('matlabHTM/Output/HTM_SM_%s.mat', name), 'SM');
 
 
     matlabHTM_timing_dataset_temp = [matlabHTM_timing_dataset_temp matlabHTM_timing_dataset];
     htm_time_notrn_temp = [htm_time_notrn_temp htm_time_notrn];
+    sm_time(i) = sum(SM.time);
     htmau_timing_dataset_temp = [htmau_timing_dataset_temp htmau_timing_dataset];
     htmau_time_notrn_temp = [htmau_time_notrn_temp htmau_time_notrn];
+    rmsm_time(i) = sum(AU.time);
     
     underscore_locations = strfind(fileNames{i},'_');
     

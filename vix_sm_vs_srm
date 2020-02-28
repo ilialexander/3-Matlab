@@ -2,19 +2,19 @@
 
 i="0"
 
-while [[ $i -lt 5 ]]
+while [[ $i -lt 1 ]]
 do
    #HTM Process
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SM_1/' vix_parallel_script ; sbatch vix_parallel_script 1 1 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SM_2/' vix_parallel_script ; sbatch vix_parallel_script 2 2 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SM_3/' vix_parallel_script ; sbatch vix_parallel_script 3 3 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SM_4/' vix_parallel_script ; sbatch vix_parallel_script 4 4 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SM_1/' vix_parallel_script ; sbatch vix_parallel_script 80 80 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SM_2/' vix_parallel_script ; sbatch vix_parallel_script 81 81 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SM_3/' vix_parallel_script ; sbatch vix_parallel_script 82 82 ) &
+   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SM_4/' vix_parallel_script ; sbatch vix_parallel_script 83 83 ) &
 
    # HTM+RM Process
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SRM_1/' vix_parallel_script ; sbatch vix_parallel_script 1 1 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SRM_2/' vix_parallel_script ; sbatch vix_parallel_script 2 2 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SRM_3/' vix_parallel_script ; sbatch vix_parallel_script 3 3 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SRM_4/' vix_parallel_script ; sbatch vix_parallel_script 4 4 )
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SRM_1/' vix_parallel_script ; sbatch vix_parallel_script 80 80 ) &
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SRM_2/' vix_parallel_script ; sbatch vix_parallel_script 81 81 ) &
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SRM_3/' vix_parallel_script ; sbatch vix_parallel_script 82 82 ) &
+   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=VIX_SRM_4/' vix_parallel_script ; sbatch vix_parallel_script 83 83 )
 
    while [[ $(squeue -u iliabautista | grep VIX | wc -l) -gt 1 ]]
    do
@@ -24,7 +24,7 @@ do
 
    #sleep 5s
 
-   matlab -nodisplay -nosplash -r "run('timing_test(74,77)')"
+   matlab -nodisplay -nosplash -r "run('timing_test(80,83)')"
 
    i=$[$i+1]
 done

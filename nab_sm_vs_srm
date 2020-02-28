@@ -5,32 +5,32 @@ i="0"
 while [[ $i -lt 1 ]]
 do
    #HTM Process
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_1/' nab_parallel_script ; sbatch nab_parallel_script 1 16 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_2/' nab_parallel_script ; sbatch nab_parallel_script 17 24 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_3/' nab_parallel_script ; sbatch nab_parallel_script 25 32 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_4/' nab_parallel_script ; sbatch nab_parallel_script 33 40 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_5/' nab_parallel_script ; sbatch nab_parallel_script 41 45 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_6/' nab_parallel_script ; sbatch nab_parallel_script 46 47 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_7/' nab_parallel_script ; sbatch nab_parallel_script 48 49 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_8/' nab_parallel_script ; sbatch nab_parallel_script 50 51 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_9/' nab_parallel_script ; sbatch nab_parallel_script 52 53 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_10/' nab_parallel_script ; sbatch nab_parallel_script 54 55 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_11/' nab_parallel_script ; sbatch nab_parallel_script 56 57 ) &
-   (cd matlabHTM/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SM_12/' nab_parallel_script ; sbatch nab_parallel_script 58 58 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 1 16 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 17 24 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 25 32 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 33 40 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 41 45 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 46 47 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 48 49 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 50 51 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 52 53 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 54 55 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 56 57 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 58 58 ) &
 
    # HTM+RM Process
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SRM_1/' nab_parallel_script ; sbatch nab_parallel_script 1 16 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SRM_2/' nab_parallel_script ; sbatch nab_parallel_script 17 24 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SRM_3/' nab_parallel_script ; sbatch nab_parallel_script 25 32 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SRM_4/' nab_parallel_script ; sbatch nab_parallel_script 33 40 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SRM_5/' nab_parallel_script ; sbatch nab_parallel_script 41 45 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SRM_6/' nab_parallel_script ; sbatch nab_parallel_script 46 47 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SRM_7/' nab_parallel_script ; sbatch nab_parallel_script 48 49 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SRM_8/' nab_parallel_script ; sbatch nab_parallel_script 50 51 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SRM_9/' nab_parallel_script ; sbatch nab_parallel_script 52 53 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SRM_10/' nab_parallel_script ; sbatch nab_parallel_script 54 55 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SRM_11/' nab_parallel_script ; sbatch nab_parallel_script 56 57 ) &
-   (cd htmau/ ; sed -i '3s/.*/#SBATCH --job-name=NAB_SRM_12/' nab_parallel_script ; sbatch nab_parallel_script 58 58 )
+   (cd htmau/ ; sbatch nab_parallel_script 1 16 ) &
+   (cd htmau/ ; sbatch nab_parallel_script 17 24 ) &
+   (cd htmau/ ; sbatch nab_parallel_script 25 32 ) &
+   (cd htmau/ ; sbatch nab_parallel_script 33 40 ) &
+   (cd htmau/ ; sbatch nab_parallel_script 41 45 ) &
+   (cd htmau/ ; sbatch nab_parallel_script 46 47 ) &
+   (cd htmau/ ; sbatch nab_parallel_script 48 49 ) &
+   (cd htmau/ ; sbatch nab_parallel_script 50 51 ) &
+   (cd htmau/ ; sbatch nab_parallel_script 52 53 ) &
+   (cd htmau/ ; sbatch nab_parallel_script 54 55 ) &
+   (cd htmau/ ; sbatch nab_parallel_script 56 57 ) &
+   (cd htmau/ ; sbatch nab_parallel_script 58 58 )
 
    #For Script Testting Purposes
    #(cd matlabHTM/ ; bash nabScript_1-2.sh)
@@ -46,7 +46,7 @@ do
 
    #sleep 5s
 
-   matlab -nodisplay -nosplash -r "run('timing_test(1,58)')"
+   #matlab -nodisplay -nosplash -r "run('timing_test(1,58)')"
 
    i=$[$i+1]
 done

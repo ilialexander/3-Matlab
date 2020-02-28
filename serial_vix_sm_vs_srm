@@ -1,0 +1,17 @@
+#!/bin/bash
+
+i="0"
+
+while [[ $i -lt 1 ]]
+do
+   #HTM Process
+   (cd matlabHTM/ ; sbatch vix_parallel_script 80 83 )
+
+   # HTM+RM Process
+   (cd htmau/ ; sbatch vix_parallel_script 80 83 )
+
+   
+   #matlab -nodisplay -nosplash -r "run('timing_test(80,83)')"
+
+   i=$[$i+1]
+done
