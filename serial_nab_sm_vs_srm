@@ -1,0 +1,21 @@
+#!/bin/bash
+start_date=$(date)
+
+i="0"
+
+while [[ $i -lt 1 ]]
+do
+   #HTM Process
+   (cd matlabHTM/ ; matlab -nodisplay -nosplash -nodesktop -r "run('runNAB(1,58,false,true)')")
+
+   # HTM+RM Process
+   (cd htmau/ ; matlab -nodisplay -nosplash -nodesktop -r "run('runNAB(1,58,false,true,true,false)')")
+
+   matlab -nodisplay -nosplash -r "run('serial_timing_test(1,58)')"
+
+   i=$[$i+1]
+done
+
+echo "Process Started:" $start_date
+echo "Process Ended:  " $(date)
+

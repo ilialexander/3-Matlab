@@ -1,4 +1,4 @@
-function timing_test (startFile, endFile)
+function serial_timing_test (startFile, endFile)
 
 fid = fopen('matlabHTM/fileList.txt', 'r');
 i = 1;
@@ -96,7 +96,7 @@ function prediction_pct(anomalyScores)
 function times_saving(file_name,matlabHTM_timing_dataset,htm_time_notrn,sm_r_timing_dataset,sm_r_time_notrn)
     underscore_locations = strfind(file_name,'_');
     
-    load(sprintf("time_results/times2analize_%s.mat",...
+    load(sprintf("time_results/times2analize_serial%s.mat",...
     file_name(strfind(file_name,'/')+1:underscore_locations(2)-1)));
 
     fprintf("Previous Amount of trials saved: %d\n",size(every_htm_time,1));
@@ -120,7 +120,7 @@ function times_saving(file_name,matlabHTM_timing_dataset,htm_time_notrn,sm_r_tim
         every_sm_r_time_notrn = [every_sm_r_time_notrn; sm_r_time_notrn];
 
         fprintf("New Amount of trials saved: %d\n",size(every_htm_time,1));
-        save (sprintf("time_results/times2analize_%s.mat",...
+        save (sprintf("time_results/times2analize_serial%s.mat",...
         file_name(strfind(file_name,'/')+1:underscore_locations(2)-1)),...
         'every_htm_time','every_sm_r_time','every_htm_time_notrn','every_sm_r_time_notrn');
     end
@@ -130,8 +130,8 @@ function times_saving(file_name,matlabHTM_timing_dataset,htm_time_notrn,sm_r_tim
     avg_every_sm_r_time = mean(every_sm_r_time,1);
     avg_every_sm_r_time_notrn = mean(every_sm_r_time_notrn,1);
 
-    avg_speed_up = diff([avg_every_sm_r_time; avg_every_htm_time]);
-    avg_speed_up_notrn = diff([avg_every_sm_r_time_notrn; avg_every_htm_time_notrn]);
+    avg_speed_up = avg_every_htm_time-avg_every_sm_r_time;
+    avg_speed_up_notrn = avg_every_htm_time_notrn-avg_every_sm_r_time_notrn;
 
     fprintf("Average Time difference of sm_r vs HTM: %s\n",avg_speed_up);
     fprintf("\n");

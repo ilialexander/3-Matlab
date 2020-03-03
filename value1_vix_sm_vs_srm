@@ -4,7 +4,7 @@ date
 
 i="0"
 
-while [[ $i -lt 5 ]]
+while [[ $i -lt 1 ]]
 do
    # HTM Process
    (cd matlabHTM/ ; matlab -nodisplay -nosplash -nodesktop -r "run('runNAB(80,83,false,true)')")
