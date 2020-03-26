@@ -4,49 +4,70 @@ i="0"
 
 while [[ $i -lt 1 ]]
 do
+   rm htmau/Output/matlabHTMRM.*
+   rm matlabHTM/Output/matlabHTM.*
+
    #HTM Process
-   (cd matlabHTM/ ; sbatch nab_parallel_script 1 16 ) &
-   (cd matlabHTM/ ; sbatch nab_parallel_script 17 24 ) &
-   (cd matlabHTM/ ; sbatch nab_parallel_script 25 32 ) &
-   (cd matlabHTM/ ; sbatch nab_parallel_script 33 40 ) &
-   (cd matlabHTM/ ; sbatch nab_parallel_script 41 45 ) &
-   (cd matlabHTM/ ; sbatch nab_parallel_script 46 47 ) &
-   (cd matlabHTM/ ; sbatch nab_parallel_script 48 49 ) &
-   (cd matlabHTM/ ; sbatch nab_parallel_script 50 51 ) &
-   (cd matlabHTM/ ; sbatch nab_parallel_script 52 53 ) &
-   (cd matlabHTM/ ; sbatch nab_parallel_script 54 55 ) &
-   (cd matlabHTM/ ; sbatch nab_parallel_script 56 57 ) &
-   (cd matlabHTM/ ; sbatch nab_parallel_script 58 58 ) &
+   (cd matlabHTM/ ; sbatch nab_parallel_script 1 33 )
+   (cd matlabHTM/ ; sbatch nab_parallel_script 34 46 )
+   (cd matlabHTM/ ; sbatch nab_parallel_script 47 48 )
+   (cd matlabHTM/ ; sbatch nab_parallel_script 49 50 )
+   (cd matlabHTM/ ; sbatch nab_parallel_script 51 52 )
+   (cd matlabHTM/ ; sbatch nab_parallel_script 53 54 )
+   (cd matlabHTM/ ; sbatch nab_parallel_script 55 56 )
+   (cd matlabHTM/ ; sbatch nab_parallel_script 57 57 )
+   (cd matlabHTM/ ; sbatch nab_parallel_script 58 58 )
 
    # HTM+RM Process
-   (cd htmau/ ; sbatch nab_parallel_script 1 16 ) &
-   (cd htmau/ ; sbatch nab_parallel_script 17 24 ) &
-   (cd htmau/ ; sbatch nab_parallel_script 25 32 ) &
-   (cd htmau/ ; sbatch nab_parallel_script 33 40 ) &
-   (cd htmau/ ; sbatch nab_parallel_script 41 45 ) &
-   (cd htmau/ ; sbatch nab_parallel_script 46 47 ) &
-   (cd htmau/ ; sbatch nab_parallel_script 48 49 ) &
-   (cd htmau/ ; sbatch nab_parallel_script 50 51 ) &
-   (cd htmau/ ; sbatch nab_parallel_script 52 53 ) &
-   (cd htmau/ ; sbatch nab_parallel_script 54 55 ) &
-   (cd htmau/ ; sbatch nab_parallel_script 56 57 ) &
+   (cd htmau/ ; sbatch nab_parallel_script 1 38 )
+   (cd htmau/ ; sbatch nab_parallel_script 39 47 )
+   (cd htmau/ ; sbatch nab_parallel_script 48 49 )
+   (cd htmau/ ; sbatch nab_parallel_script 50 51 )
+   (cd htmau/ ; sbatch nab_parallel_script 52 53 )
+   (cd htmau/ ; sbatch nab_parallel_script 54 55 )
+   (cd htmau/ ; sbatch nab_parallel_script 56 56 )
+   (cd htmau/ ; sbatch nab_parallel_script 57 57 )
    (cd htmau/ ; sbatch nab_parallel_script 58 58 )
 
-   #For Script Testting Purposes
-   #(cd matlabHTM/ ; bash nabScript_1-2.sh)
-   #(cd htmau/ ; bash nabScript_1-2.sh)
-
-   #sleep 30
-
-   while [[ $(squeue -u iliabautista | grep NAB | wc -l) -gt 1 ]]
+   while [[ $(squeue -u iliabautista | grep NAB | wc -l) -gt 0 ]]
    do
       sleep 5m
       echo $i
    done
 
-   #sleep 5s
+   htm_datasets_done=$(grep -nr iteration_finished_properly htmau/Output | awk -F: '{print $1}' | wc -l)
+   sm_r_datasets_done=$(grep -nr iteration_finished_properly matlabHTM/Output | awk -F: '{print $1}' | wc -l)
+   
+   while [ $htm_datasets_done -lt 58 ] && [ $sm_r_datasets_done -lt 58 ]
+   do
+      for j in {1..58}
+      do
+         if [ $(grep "${j}:iteration_finished_properly" htmau/Output | awk -F: '{print $1}' | wc -l) -lt 1 ]
+         then
+            echo "Dataset ${j} did not finished processing properly. Resubmitting dataset"
+            (cd matlabHTM/ ; sbatch nab_parallel_script $j $j )
+         fi
+   
+         if [ $(grep "${j}:iteration_finished_properly" matlabHTM/Output | awk -F: '{print $1}' | wc -l) -lt 1 ]
+         then
+            echo "Dataset ${j} did not finished processing properly. Resubmitting dataset"
+            (cd htmau/ ; sbatch nab_parallel_script $j $j )
+         fi
+   
+      done
+   
+      htm_datasets_done=$(grep -nr iteration_finished_properly htmau/Output | awk -F: '{print $1}' | wc -l)
+      sm_r_datasets_done=$(grep -nr iteration_finished_properly matlabHTM/Output | awk -F: '{print $1}' | wc -l)
 
-   #matlab -nodisplay -nosplash -r "run('timing_test(1,58)')"
+      while [[ $(squeue -u iliabautista | grep NAB | wc -l) -gt 0 ]]
+      do
+         sleep 5m
+         echo $i
+      done
+
+   done
+
+   matlab -nodisplay -nosplash -r "run('timing_test(1,58)')"
 
    i=$[$i+1]
 done

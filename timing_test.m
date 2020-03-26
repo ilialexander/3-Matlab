@@ -68,7 +68,7 @@ else
 end
 
 
-exit
+%%exit
 
 
 function prediction_pct(anomalyScores)
@@ -130,8 +130,12 @@ function times_saving(file_name,matlabHTM_timing_dataset,htm_time_notrn,sm_r_tim
     avg_every_sm_r_time = mean(every_sm_r_time,1);
     avg_every_sm_r_time_notrn = mean(every_sm_r_time_notrn,1);
 
-    avg_speed_up = diff([avg_every_sm_r_time; avg_every_htm_time]);
-    avg_speed_up_notrn = diff([avg_every_sm_r_time_notrn; avg_every_htm_time_notrn]);
+    avg_speed_up = avg_every_htm_time-avg_every_sm_r_time;
+    avg_speed_up_notrn = avg_every_htm_time_notrn-avg_every_sm_r_time_notrn;
+    
+    csvwrite (sprintf("time_results/times2analize_avg_%s.csv",...
+        file_name(strfind(file_name,'/')+1:underscore_locations(2)-1)),...
+        avg_every_htm_time_notrn',avg_every_sm_r_time_notrn');
 
     fprintf("Average Time difference of sm_r vs HTM: %s\n",avg_speed_up);
     fprintf("\n");

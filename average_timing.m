@@ -1,12 +1,12 @@
-load time_results/times2analize.mat
+load time_results/times2analize_hourly_numentaTM.mat
 
 avg_every_htm_time = mean(every_htm_time,1);
 avg_every_htm_time_notrn = mean(every_htm_time_notrn,1);
-avg_every_htmau_time = mean(every_htmau_time,1);
-avg_every_htmau_time_notrn = mean(every_htmau_time_notrn,1);
+avg_every_sm_r_time = mean(every_sm_r_time,1);
+avg_every_sm_r_time_notrn = mean(every_sm_r_time_notrn,1);
 
-avg_speed_up = diff([avg_every_htmau_time; avg_every_htm_time]);
-avg_speed_up_notrn = diff([avg_every_htmau_time_notrn; avg_every_htm_time_notrn]);
+avg_speed_up = diff([avg_every_sm_r_time; avg_every_htm_time]);
+avg_speed_up_notrn = diff([avg_every_sm_r_time_notrn; avg_every_htm_time_notrn]);
 
 fprintf("Average Time difference of HTMAU vs HTM: %s\n",avg_speed_up);
 fprintf("\n");
