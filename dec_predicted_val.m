@@ -1,5 +1,4 @@
-startFile = 80;
-endFile = 83;
+function dec_predicted_val(startFile,endFile,trn_trials,trn_mult)
 
 fid = fopen('matlabHTM/fileList.txt', 'r');
 i = 1;
@@ -25,7 +24,9 @@ predicted_above_max_val = zeros(4053,1);
 
 algorithm = ["matlabHTM","htmau"];
 
-for l=1:2
+l=1;
+
+%for l=1:2
 
     for i=startFile:endFile
         [~, name, ~] = fileparts(fileNames{i});
@@ -68,8 +69,34 @@ for l=1:2
             predicted_above_max_val(j,1) = values_table(above_max_val_longest_seq(j));
         end
 
-         predicted_val_seq = predicted_val_seq;
+        predicted_val_seq = predicted_val_seq;
 
         csvwrite (sprintf('%s/Output/predicted_value_HTM_SM_%s.csv', algorithm(l),name),predicted_val_seq);
+        
+        readData = importdata (sprintf("%s/%s",algorithm(l),fileNames{i}));
+        rawData (:, 1) = readData (2:length(readData),1);
+
+        trN = (trn_mult+5)*100;
+        distance_trn = norm(rawData(trN:4052) - predicted_val_seq(trN:4052));
+        distance_600 = norm(rawData(600:4052) - predicted_val_seq(600:4052));
+        fprintf("\nSimilarity of %s through %s from trn is %d.",name,algorithm(l),distance_trn);
+        fprintf("\nSimilarity of %s through %s from 600 is %d.\n",name,algorithm(l),distance_600);
     end
+    
+    
+    
+    
+    if exist('distances.mat','file')
+        load ('distances.mat','evr_distance_trn','evr_distance_600');
+        evr_distance_trn{trn_trials,trn_mult} = distance_trn;
+        evr_distance_600{trn_trials,trn_mult} = distance_600;
+        save ('distances.mat','evr_distance_trn','evr_distance_600','-append');
+    else
+        evr_distance_trn{trn_trials,trn_mult} = distance_trn;
+        evr_distance_600{trn_trials,trn_mult} = distance_600;
+        save ('distances.mat','evr_distance_trn','evr_distance_600');
+    end    
+%end
+
+
 end

@@ -2,7 +2,7 @@
 
 i="0"
 
-while [[ $i -lt 1 ]]
+while [[ $i -lt 9 ]]
 do
    rm htmau/Output/matlabHTMRM.*
    rm matlabHTM/Output/matlabHTM.*
@@ -42,18 +42,17 @@ do
    do
       for j in {1..58}
       do
-         if [ $(grep "${j}:iteration_finished_properly" htmau/Output | awk -F: '{print $1}' | wc -l) -lt 1 ]
+         if [ $(grep -nr "^${j}:iteration_finished_properly" htmau/Output | awk -F: '{print $1}' | wc -l) -lt 1 ]
          then
-            echo "Dataset ${j} did not finished processing properly. Resubmitting dataset"
+            echo "Dataset ${j} did not finish processing properly on matlabHTM. Resubmitting dataset"
             (cd matlabHTM/ ; sbatch nab_parallel_script $j $j )
          fi
    
-         if [ $(grep "${j}:iteration_finished_properly" matlabHTM/Output | awk -F: '{print $1}' | wc -l) -lt 1 ]
+         if [ $(grep -nr "^${j}:iteration_finished_properly" matlabHTM/Output | awk -F: '{print $1}' | wc -l) -lt 1 ]
          then
-            echo "Dataset ${j} did not finished processing properly. Resubmitting dataset"
+            echo "Dataset ${j} did not finish processing properly sm_r. Resubmitting dataset"
             (cd htmau/ ; sbatch nab_parallel_script $j $j )
          fi
-   
       done
    
       htm_datasets_done=$(grep -nr iteration_finished_properly htmau/Output | awk -F: '{print $1}' | wc -l)
