@@ -1,0 +1,53 @@
+#!/bin/bash
+
+i="0"
+
+while [[ $i -lt 1 ]]
+do
+   rm rsm_stats/Output/matlabHTMRM.*
+
+   # HTM+RM Process
+   (cd rsm_stats/ ; sbatch nab_parallel_script 1 38 )
+   (cd rsm_stats/ ; sbatch nab_parallel_script 39 47 )
+   (cd rsm_stats/ ; sbatch nab_parallel_script 48 49 )
+   (cd rsm_stats/ ; sbatch nab_parallel_script 50 51 )
+   (cd rsm_stats/ ; sbatch nab_parallel_script 52 53 )
+   (cd rsm_stats/ ; sbatch nab_parallel_script 54 55 )
+   (cd rsm_stats/ ; sbatch nab_parallel_script 56 56 )
+   (cd rsm_stats/ ; sbatch nab_parallel_script 57 57 )
+   (cd rsm_stats/ ; sbatch nab_parallel_script 58 58 )
+
+   while [[ $(squeue -u iliabautista | grep NAB | wc -l) -gt 0 ]]
+   do
+      sleep 5m
+      echo $i
+   done
+
+   htm_datasets_done=$(grep -nr iteration_finished_properly rsm_stats/Output | awk -F: '{print $1}' | wc -l)
+   
+   while [ $htm_datasets_done -lt 58 ] && [ $sm_r_datasets_done -lt 58 ]
+   do
+      for j in {1..58}
+      do
+         if [ $(grep "${j}:iteration_finished_properly" matlabHTM/Output | awk -F: '{print $1}' | wc -l) -lt 1 ]
+         then
+            echo "Dataset ${j} did not finished processing properly. Resubmitting dataset"
+            (cd rsm_stats/ ; sbatch nab_parallel_script $j $j )
+         fi
+   
+      done
+   
+      htm_datasets_done=$(grep -nr iteration_finished_properly rsm_stats/Output | awk -F: '{print $1}' | wc -l)
+
+      while [[ $(squeue -u iliabautista | grep NAB | wc -l) -gt 0 ]]
+      do
+         sleep 5m
+         echo $i
+      done
+
+   done
+
+   matlab -nodisplay -nosplash -r "run('get_statistics()')"
+
+   i=$[$i+1]
+done
