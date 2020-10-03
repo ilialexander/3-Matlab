@@ -47,7 +47,7 @@ do
 
    done
 
-   matlab -nodisplay -nosplash -r "run('get_statistics()')"
+   matlab -nodisplay -nosplash -r "run('parse_rsm_stats')"
 
    i=$[$i+1]
 done

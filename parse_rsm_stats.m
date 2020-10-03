@@ -61,7 +61,7 @@ if purge == 1
         'rm_predict_toc_trials', 'rm_learn_toc_trials');
 end
 
-%exit;
+exit;
 %fprintf("\n\n")
 
 %fprintf("All max amount of active synpases over all datasets: %6.0f \n", max_active_synapses);
