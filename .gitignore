@@ -1,6 +1,9 @@
 #ignore rsm directory
 rsm
 
+#ignore rsm directory
+rsm_stats
+
 #ignore matlabHTM directory
 matlabHTM
 
